@@ -344,6 +344,23 @@ class TestAnnotationCaptureAtDiscovery:
         assert not hints.get("delete_repo")
         assert not hints.get("no_annotations")
 
+    @pytest.mark.parametrize("hint", [True, False, None])
+    def test_real_annotation_object_is_read_in_both_sdk_generations(self, hint):
+        """mcp 2.x exposes ``read_only_hint`` and keeps camelCase as a serialization
+        alias only, so a real annotation object must classify identically either way."""
+        from mcp.types import ToolAnnotations
+
+        annotations = ToolAnnotations.model_validate({"readOnlyHint": hint})
+        tool = self._make_tool("inspect", annotations)
+        assert _mcp_registration._annotation_read_only_hint(tool) is (hint is True)
+
+    @pytest.mark.parametrize("hint", [True, False, None])
+    def test_cached_annotation_dicts_are_read_in_both_spellings(self, hint):
+        """Cached JSON carries whichever spelling the writer used."""
+        for spelling in ("readOnlyHint", "read_only_hint"):
+            tool = self._make_tool("inspect", {spelling: hint})
+            assert _mcp_registration._annotation_read_only_hint(tool) is (hint is True), spelling
+
     def test_dict_annotations_supported(self):
         """Cached/JSON annotations arrive as plain dicts."""
         assert _mcp_registration._annotation_read_only_hint(
