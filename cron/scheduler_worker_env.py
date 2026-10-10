@@ -27,6 +27,34 @@ from pathlib import Path
 logger = logging.getLogger(__name__)
 
 
+def active_runtime_python(path_entries: list[str], fallback: str | Path) -> Path:
+    """Return the interpreter for a PM venv currently active on ``sys.path``.
+
+    The gateway can run the standalone base interpreter with the selected PM
+    environment's site-packages added to ``sys.path``. A child must use the venv's
+    interpreter because its sanitized environment intentionally drops those paths.
+    Only select the canonical ``.../environments/<generation>/venv`` layout; a
+    regular Python site-packages directory is not evidence of a venv.
+    """
+    for entry in path_entries:
+        site = Path(entry)
+        if site.name != "site-packages":
+            continue
+        if os.name == "nt":
+            if site.parent.name.casefold() != "lib":
+                continue
+            venv = site.parent.parent
+            executable = venv / "Scripts" / "python.exe"
+        else:
+            if site.parent.parent.name != "lib":
+                continue
+            venv = site.parent.parent.parent
+            executable = venv / "bin" / "python"
+        if venv.name == "venv" and venv.parent.parent.name == "environments":
+            return executable
+    return Path(fallback)
+
+
 def _installed_purelib() -> Path | None:
     try:
         return Path(sysconfig.get_paths()["purelib"]).resolve()

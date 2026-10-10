@@ -652,6 +652,17 @@ def test_launch_external_worker_pins_the_gateways_tree_on_pythonpath(
     assert spawned[0][1]["cwd"] == str(repo_root)
 
 
+def test_active_runtime_python_uses_only_the_canonical_pm_venv(tmp_path):
+    import cron.scheduler_worker_env as worker_env
+
+    site = tmp_path / "installs" / "install" / "environments" / "generation" / "venv" / "lib" / "python3.14" / "site-packages"
+    selected = worker_env.active_runtime_python([str(site)], "/base/python")
+    assert selected == site.parents[2] / "bin" / "python"
+
+    ordinary = tmp_path / "python3.14" / "site-packages"
+    assert worker_env.active_runtime_python([str(ordinary)], "/base/python") == Path("/base/python")
+
+
 def test_launch_external_worker_pin_extends_the_sanitized_env_not_os_environ(
     tmp_path, monkeypatch,
 ):
