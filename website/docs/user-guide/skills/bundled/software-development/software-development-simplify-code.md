@@ -21,7 +21,7 @@ Parallel 4-agent cleanup of recent code changes.
 | License | MIT |
 | Platforms | linux, macos, windows |
 | Tags | `code-review`, `cleanup`, `refactor`, `delegation`, `subagent`, `parallel`, `simplify` |
-| Related skills | [`requesting-code-review`](../../bundled/software-development/software-development-requesting-code-review.md), [`test-driven-development`](../../bundled/software-development/software-development-test-driven-development.md) |
+| Related skills | [`requesting-code-review`](../../bundled/software-development/software-development-requesting-code-review.md), [`verify-real-artifact`](../../bundled/software-development/software-development-verify-real-artifact.md) |
 
 ## Reference: full SKILL.md
 

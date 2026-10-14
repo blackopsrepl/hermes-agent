@@ -21,7 +21,7 @@ description: "4-phase root cause debugging: understand bugs before fixing"
 | License | MIT |
 | Platforms | linux, macos, windows |
 | Tags | `debugging`, `troubleshooting`, `problem-solving`, `root-cause`, `investigation` |
-| Related skills | [`test-driven-development`](../../bundled/software-development/software-development-test-driven-development.md), [`subagent-driven-development`](../../optional/software-development/software-development-subagent-driven-development.md) |
+| Related skills | [`verify-real-artifact`](../../bundled/software-development/software-development-verify-real-artifact.md), [`subagent-driven-development`](../../optional/software-development/software-development-subagent-driven-development.md) |
 
 ## Reference: full SKILL.md
 
@@ -291,7 +291,7 @@ If the user is present, show the ranked list before testing. They may have domai
 - Simplest possible reproduction
 - Automated test if possible
 - MUST have before fixing
-- Use the `test-driven-development` skill
+- Use the `verify-real-artifact` skill
 
 ### 2. Implement Single Fix
 
@@ -410,13 +410,13 @@ delegate_task(
 )
 ```
 
-### With test-driven-development
+### With verify-real-artifact
 
 When fixing bugs:
-1. Write a test that reproduces the bug (RED)
+1. Write a test that reproduces the bug (the failing repro)
 2. Debug systematically to find root cause
-3. Fix the root cause (GREEN)
-4. The test proves the fix and prevents regression
+3. Fix the root cause
+4. Re-verify on the surface that failed; the repro lands in history before the fix
 
 ## Real-World Impact
 

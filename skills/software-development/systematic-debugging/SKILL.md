@@ -8,7 +8,7 @@ platforms: [linux, macos, windows]
 metadata:
   hermes:
     tags: [debugging, troubleshooting, problem-solving, root-cause, investigation]
-    related_skills: [test-driven-development, subagent-driven-development]
+    related_skills: [verify-real-artifact, subagent-driven-development]
 ---
 
 # Systematic Debugging
@@ -273,7 +273,7 @@ If the user is present, show the ranked list before testing. They may have domai
 - Simplest possible reproduction
 - Automated test if possible
 - MUST have before fixing
-- Use the `test-driven-development` skill
+- Use the `verify-real-artifact` skill
 
 ### 2. Implement Single Fix
 
@@ -392,13 +392,13 @@ delegate_task(
 )
 ```
 
-### With test-driven-development
+### With verify-real-artifact
 
 When fixing bugs:
-1. Write a test that reproduces the bug (RED)
+1. Write a test that reproduces the bug (the failing repro)
 2. Debug systematically to find root cause
-3. Fix the root cause (GREEN)
-4. The test proves the fix and prevents regression
+3. Fix the root cause
+4. Re-verify on the surface that failed; the repro lands in history before the fix
 
 ## Real-World Impact
 

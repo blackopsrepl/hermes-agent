@@ -8,7 +8,7 @@ platforms: [linux, macos, windows]
 metadata:
   hermes:
     tags: [delegation, subagent, implementation, workflow, parallel]
-    related_skills: [requesting-code-review, test-driven-development]
+    related_skills: [requesting-code-review, verify-real-artifact]
 ---
 
 # Subagent-Driven Development
@@ -260,15 +260,13 @@ This skill EXECUTES plans created by the `plan` skill:
 1. User requirements → plan → implementation plan
 2. Implementation plan → subagent-driven-development → working code
 
-### With test-driven-development
+### With verify-real-artifact
 
-Implementer subagents should follow TDD:
-1. Write failing test first
-2. Implement minimal code
-3. Verify test passes
+Implementer subagents verify against the real artifact:
+1. Implement the change
+2. Run the real thing end to end and capture its output
+3. Add a regression pin only where the failure site justifies one
 4. Commit
-
-Include TDD instructions in every implementer context.
 
 ### With requesting-code-review
 
