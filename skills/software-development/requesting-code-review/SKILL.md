@@ -8,7 +8,7 @@ platforms: [linux, macos, windows]
 metadata:
   hermes:
     tags: [code-review, security, verification, quality, pre-commit, auto-fix]
-    related_skills: [subagent-driven-development, test-driven-development, github]
+    related_skills: [subagent-driven-development, verify-real-artifact, github]
 ---
 
 # Pre-Commit Code Verification
@@ -268,8 +268,9 @@ element.textContent = userInput;
 **subagent-driven-development:** Run this after EACH task as the quality gate.
 The two-stage review (spec compliance + code quality) uses this pipeline.
 
-**test-driven-development:** This pipeline verifies TDD discipline was followed —
-tests exist, tests pass, no regressions.
+**verify-real-artifact:** This pipeline verifies the real artifact ran with
+its output on record — real-run evidence first, then targeted regression pins
+where failure sites justify them.
 
 **plan:** Validates implementation matches the plan requirements.
 

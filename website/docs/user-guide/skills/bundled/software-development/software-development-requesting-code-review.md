@@ -21,7 +21,7 @@ Pre-commit review: security scan, quality gates, auto-fix.
 | License | MIT |
 | Platforms | linux, macos, windows |
 | Tags | `code-review`, `security`, `verification`, `quality`, `pre-commit`, `auto-fix` |
-| Related skills | [`subagent-driven-development`](../../optional/software-development/software-development-subagent-driven-development.md), [`test-driven-development`](../../bundled/software-development/software-development-test-driven-development.md), [`github`](../../bundled/software-development/software-development-github.md) |
+| Related skills | [`subagent-driven-development`](../../optional/software-development/software-development-subagent-driven-development.md), [`verify-real-artifact`](../../bundled/software-development/software-development-verify-real-artifact.md), [`github`](../../bundled/software-development/software-development-github.md) |
 
 ## Reference: full SKILL.md
 
@@ -286,8 +286,9 @@ element.textContent = userInput;
 **subagent-driven-development:** Run this after EACH task as the quality gate.
 The two-stage review (spec compliance + code quality) uses this pipeline.
 
-**test-driven-development:** This pipeline verifies TDD discipline was followed —
-tests exist, tests pass, no regressions.
+**verify-real-artifact:** This pipeline verifies the real artifact ran with
+its output on record — real-run evidence first, then targeted regression pins
+where failure sites justify them.
 
 **plan:** Validates implementation matches the plan requirements.
 
