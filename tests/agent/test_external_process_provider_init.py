@@ -84,6 +84,27 @@ def test_fallback_activation_keeps_external_process_provider_on_chat_completions
     assert _fallback_api_mode_resolved(agent, "acme-http", "gpt-5.6", "https://proxy.example.invalid/v1") == "codex_responses"
 
 
+def test_opencode_fallback_respects_plugin_client_wire(monkeypatch):
+    """An external-process profile declares its own SDK-facing api_mode, so the fallback's
+    re-derived wire keeps the facade's mode instead of the OpenCode family heuristic the
+    same model would hit on a built-in Zen/Go provider."""
+    from agent.chat_completion_helpers import _fallback_api_mode_resolved
+    from providers.base import ProviderProfile
+    from run_agent import AIAgent
+
+    profile = ProviderProfile(
+        name="opencode-free", auth_type="external_process", api_mode="chat_completions")
+    monkeypatch.setattr("providers.get_provider_profile", lambda name: profile if name == profile.name else None)
+    agent = SimpleNamespace(
+        _is_azure_openai_url=lambda url: False, _is_direct_openai_url=lambda url: False,
+        _provider_model_requires_responses_api=AIAgent._provider_model_requires_responses_api)
+    url = "https://opencode.ai/zen/v1/chat/completions"
+    assert _fallback_api_mode_resolved(
+        agent, profile.name, "muse-spark-1.3-contributor-free", url) == "chat_completions"
+    assert _fallback_api_mode_resolved(
+        agent, "opencode-zen", "muse-spark-1.3-contributor-free", url) == "codex_responses"
+
+
 def test_should_stream_is_off_for_any_external_process_profile(monkeypatch):
     """Streaming is disabled for every ACP provider, keyed on the profile — not on the ``acp://``
     marker alone and not on one vendor's slug."""

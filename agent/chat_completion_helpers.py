@@ -1846,6 +1846,12 @@ def _fallback_api_mode_hint(fb: dict, fb_provider: str, fb_base_url_hint: Option
 def _fallback_api_mode_resolved(agent, fb_provider: str, fb_model: str, fb_base_url: str) -> str:
     """Re-detect api_mode from provider / resolved base URL / model when the hint pass
     landed on the chat_completions default (never called for an explicit api_mode)."""
+    from providers import get_provider_profile
+    profile = get_provider_profile(fb_provider)
+    if profile is not None and profile.auth_type == "external_process":
+        # The facade owns upstream wire conversion; host/model heuristics describe
+        # the relay, not the SDK surface the provider supplied to Hermes.
+        return profile.api_mode
     if fb_provider == "openai-codex":
         return "codex_responses"
     from hermes_cli.models import opencode_model_api_mode
